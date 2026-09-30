@@ -1,0 +1,15 @@
+package com.nemo.api_health_monitor.domain.dto;
+
+import java.util.UUID;
+
+public record MonitoredEndpointResponseDto(
+    UUID id,
+    String name,
+    String url,
+    String method,
+    int interval_seconds,
+    int expected_status,
+    boolean is_active
+) {
+
+}

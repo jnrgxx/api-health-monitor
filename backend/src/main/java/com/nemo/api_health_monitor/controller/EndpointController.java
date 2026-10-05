@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.UUID;
 
 /**
  * REST controller for  Endpoints operations.
@@ -37,7 +37,7 @@ public class EndpointController {
 
         // comes from the database
         // need a method from service to get list all endpoints
-        return ResponseEntity.ok(EndpointService.listAllEndpoints());
+        return ResponseEntity.ok(endpointService.listAllEndpoints());
     }
 
     /**
@@ -46,7 +46,7 @@ public class EndpointController {
      * @return the  endpoints
      */
     @GetMapping("/{id}")
-    public ResponseEntity<EndpointResponseDto> getEndpoint(@Valid @RequestBody EndpointRequestDto request) {
+    public ResponseEntity<EndpointResponseDto> getEndpoint(@PathVariable UUID id) {
         // need a method from service to get the endpoint using the id
         return ResponseEntity.ok(endpointService.getEndpoint(id));
     }

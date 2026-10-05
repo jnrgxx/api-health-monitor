@@ -1,8 +1,13 @@
 package com.nemo.api_health_monitor.mapper;
 
+import com.nemo.api_health_monitor.domain.dto.EndpointRequestDto;
 import com.nemo.api_health_monitor.domain.dto.EndpointResponseDto;
 import com.nemo.api_health_monitor.domain.entity.Endpoint;
+import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
+@Component
 public class EndpointMapper {
 
     /**
@@ -14,8 +19,8 @@ public class EndpointMapper {
      * - 'createdAt' is auto-set by @PrePersist
      * - 'objects' starts as an empty list, we don't set it here
      */
-    public Bucket toEntity(CreateBucketRequest request) {
-        return Bucket.builder()
+    public Endpoint toEntity(EndpointRequestDto request) {
+        return Endpoint.builder()
                 .name(request.name())   // Extract the name from the request record
                 .build();               // Lombok @Builder generates this for us
     }
@@ -25,11 +30,16 @@ public class EndpointMapper {
      * We also pass in objectCount separately because it's a computed value
      * (count of StorageObjects in this bucket), not stored directly on the entity.
      */
-    public EndpointResponseDto toDto(Endpoint monitoredEndpoint) {
+    public EndpointResponseDto toDto(Endpoint endpoint) {
         return new EndpointResponseDto(
-                monitoredEndpoint.getId(),
-                monitoredEndpoint.getName(),
-                monitoredEndpoint.getCreatedAt()
+                endpoint.getId(),
+                endpoint.getName(),
+                endpoint.getUrl(),
+                endpoint.getMethod(),
+                endpoint.getInterval_seconds(),
+                endpoint.getExpected_status(),
+                endpoint.is_active(),
+                endpoint.getCreatedAt()
         );
     }
 }

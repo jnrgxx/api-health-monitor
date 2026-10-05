@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/{id}/results")
-public class CheckResultController {
+public class ResultController {
 
 }

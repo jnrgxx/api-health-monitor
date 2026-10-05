@@ -2,7 +2,7 @@ package com.nemo.api_health_monitor.domain.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record MonitoredEndpointRequestDto(
+public record EndpointRequestDto(
         @NotBlank(message = "Endpoint name is required")
         String name,
         String url,

@@ -2,7 +2,7 @@ package com.nemo.api_health_monitor.domain.dto;
 
 import java.util.UUID;
 
-public record MonitoredEndpointResponseDto(
+public record EndpointResponseDto(
     UUID id,
     String name,
     String url,

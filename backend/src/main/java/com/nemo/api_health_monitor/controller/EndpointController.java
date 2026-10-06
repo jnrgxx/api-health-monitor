@@ -4,6 +4,7 @@ import com.nemo.api_health_monitor.domain.dto.EndpointRequestDto;
 import com.nemo.api_health_monitor.domain.dto.EndpointResponseDto;
 import com.nemo.api_health_monitor.service.EndpointService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,18 @@ public class EndpointController {
     }
 
     /**
+     * Get a specific  endpoint
+     *
+     * @return the  endpoints
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<EndpointResponseDto> getEndpoint(@PathVariable UUID id) {
+        // need a method from service to get the endpoint using the id
+        return ResponseEntity.ok(endpointService.getEndpoint(id));
+    }
+
+
+    /**
      * List all the  endpoints
      *
      * @return all the  endpoints
@@ -40,19 +53,20 @@ public class EndpointController {
         return ResponseEntity.ok(endpointService.listAllEndpoints());
     }
 
-    /**
-     * Get a specific  endpoint
-     *
-     * @return the  endpoints
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<EndpointResponseDto> getEndpoint(@PathVariable UUID id) {
-        // need a method from service to get the endpoint using the id
-        return ResponseEntity.ok(endpointService.getEndpoint(id));
+
+
+//    POST   /api/endpoints          Register a new endpoint to monitor
+    @PostMapping
+    public ResponseEntity<EndpointResponseDto> addNewEndpoint(@Valid @RequestBody EndpointRequestDto request) {
+        EndpointResponseDto endpoint = endpointService.addNewEndpoint(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(endpoint);
     }
 
-//    @PostMapping
-//    public
+//    PUT    /api/endpoints/{id}     Update endpoint (URL, interval, etc.)
+
+//    DELETE /api/endpoints/{id}     Stop monitoring and delete
+
+//    PATCH  /api/endpoints/{id}/toggle   Turn monitoring on or off
 
 
 }

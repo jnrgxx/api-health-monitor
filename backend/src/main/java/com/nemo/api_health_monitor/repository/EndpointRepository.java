@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface EndpointRepository extends JpaRepository<Endpoint, UUID> {
     Optional<Endpoint> findByName(String name); // Spring Data JPA automatically implements this based on the method name — it generates `SELECT * FROM buckets WHERE name = ?`
 
-    boolean existsByName(String name); // Same pattern, returns true/false
+    boolean existsByUrl(String url); // Same pattern, returns true/false
 
 
 }

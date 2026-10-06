@@ -1,5 +1,6 @@
 package com.nemo.api_health_monitor.service.impl;
 
+import com.nemo.api_health_monitor.domain.dto.EndpointRequestDto;
 import com.nemo.api_health_monitor.domain.dto.EndpointResponseDto;
 import com.nemo.api_health_monitor.domain.entity.Endpoint;
 import com.nemo.api_health_monitor.exception.EndpointNotFoundException;
@@ -24,6 +25,15 @@ public class EndpointServiceImpl implements EndpointService {
     }
 
     @Override
+    public EndpointResponseDto getEndpoint(UUID id) {
+        Endpoint endpoint = endpointRepository.findById(id)
+                .orElseThrow(() -> new EndpointNotFoundException(
+                        "Endpoint not found with id: " + id
+                ));
+        return endpointMapper.toDto(endpoint);
+    }
+
+    @Override
     public List<EndpointResponseDto> listAllEndpoints() {
         List<Endpoint> endpoints = endpointRepository.findAll();
 
@@ -36,12 +46,26 @@ public class EndpointServiceImpl implements EndpointService {
 //        }).toList();
     }
 
+//    POST   /api/endpoints          Register a new endpoint to monitor
     @Override
-    public EndpointResponseDto getEndpoint(UUID id) {
-        Endpoint endpoint = endpointRepository.findById(id)
-                .orElseThrow(() -> new EndpointNotFoundException(
-                        "Endpoint not found with id: " + id
-                ));
-        return endpointMapper.toDto(endpoint);
+    public EndpointResponseDto addNewEndpoint(EndpointRequestDto request) {
+        if (endpointRepository.existsByUrl(request.url())){
+            throw new IllegalArgumentException(
+                    "Endpoint with url '" + request.url() + " ' already exists"
+            );
+
+            Endpoint endpoint = endpointMapper.toEntity(request);
+            endpoint = endpointRepository.save(endpoint);
+
+            return endpointMapper.toDto(endpoint);
+        }
     }
+
+
+//    PUT    /api/endpoints/{id}     Update endpoint (URL, interval, etc.)
+
+//    DELETE /api/endpoints/{id}     Stop monitoring and delete
+
+//    PATCH  /api/endpoints/{id}/toggle   Turn monitoring on or off
+
 }

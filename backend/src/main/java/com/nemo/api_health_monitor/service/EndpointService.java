@@ -1,5 +1,6 @@
 package com.nemo.api_health_monitor.service;
 
+import com.nemo.api_health_monitor.domain.dto.EndpointRequestDto;
 import com.nemo.api_health_monitor.domain.dto.EndpointResponseDto;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface EndpointService {
     List<EndpointResponseDto> listAllEndpoints();
 
     EndpointResponseDto getEndpoint(UUID id);
+
+    EndpointResponseDto addNewEndpoint(EndpointRequestDto request);
 }

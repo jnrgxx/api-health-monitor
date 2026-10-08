@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface ResultsRepository extends JpaRepository<Result, UUID> {
+
+    void deleteAllByEndpointId(UUID endpointId);
 }

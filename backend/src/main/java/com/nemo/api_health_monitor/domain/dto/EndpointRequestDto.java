@@ -7,6 +7,8 @@ public record EndpointRequestDto(
         String name,
         String url,
         String method,
-        int expected_status
+        int intervalSeconds,
+        int expectedStatus,
+        boolean active
 ) {
 }

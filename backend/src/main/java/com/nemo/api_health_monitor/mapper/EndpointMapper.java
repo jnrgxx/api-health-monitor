@@ -11,7 +11,7 @@ import java.util.UUID;
 public class EndpointMapper {
 
     /**
-     * Converts an API request (CreateBucketRequest) into a JPA entity (Bucket)
+     * Converts an API request (EndpointRequestDto) into a JPA entity (Endpoint)
      * so we can save it to the database.
      *
      * Why only set 'name'?

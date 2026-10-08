@@ -43,13 +43,13 @@ public class Endpoint {
     private String method;
 
     @Column(nullable = false)
-    private int interval_seconds;
+    private int intervalSeconds;
 
     @Column(nullable = false)
-    private int expected_status;
+    private int expectedStatus;
 
     @Column(nullable = false)
-    private boolean is_active;
+    private boolean active;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -58,4 +58,5 @@ public class Endpoint {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
 }

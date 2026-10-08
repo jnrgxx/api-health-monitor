@@ -8,9 +8,9 @@ public record EndpointResponseDto(
     String name,
     String url,
     String method,
-    int interval_seconds,
-    int expected_status,
-    boolean is_active,
+    int intervalSeconds,
+    int expectedStatus,
+    boolean active,
     LocalDateTime createdAt
 ) {
 

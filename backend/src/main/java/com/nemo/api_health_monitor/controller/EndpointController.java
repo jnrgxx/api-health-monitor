@@ -56,6 +56,11 @@ public class EndpointController {
 
 
 //    POST   /api/endpoints          Register a new endpoint to monitor
+    /**
+     * Register a new endpoint
+     *
+     * @return endpoint details
+     */
     @PostMapping
     public ResponseEntity<EndpointResponseDto> addNewEndpoint(@Valid @RequestBody EndpointRequestDto request) {
         EndpointResponseDto endpoint = endpointService.addNewEndpoint(request);
@@ -63,11 +68,33 @@ public class EndpointController {
     }
 
 //    PUT    /api/endpoints/{id}     Update endpoint (URL, interval, etc.)
+    /**
+     * Delete an endpoint
+     *
+     * @return void (none)
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<EndpointResponseDto> updateEndpoint(@Valid @RequestBody EndpointRequestDto request, @PathVariable UUID id) {
+        return ResponseEntity.ok(endpointService.updateEndpoint(request, id));
+    }
+
+    //    PATCH  /api/endpoints/{id}/toggle   Turn monitoring on or off
+    @PatchMapping("/{id}/toggle")
+    public ResponseEntity<EndpointResponseDto> toggleMonitoring(@PathVariable UUID id) {
+        return ResponseEntity.ok(endpointService.toggleMonitoring(id));
+    }
+
 
 //    DELETE /api/endpoints/{id}     Stop monitoring and delete
-
-//    PATCH  /api/endpoints/{id}/toggle   Turn monitoring on or off
-
-
+    /**
+     * Delete an endpoint
+     *
+     * @return void (none)
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteEndpoint(@PathVariable UUID id) {
+        endpointService.deleteEndpoint(id);
+        return ResponseEntity.noContent().build();
+    }
 }
 

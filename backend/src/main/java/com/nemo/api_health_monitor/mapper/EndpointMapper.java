@@ -36,9 +36,9 @@ public class EndpointMapper {
                 endpoint.getName(),
                 endpoint.getUrl(),
                 endpoint.getMethod(),
-                endpoint.getInterval_seconds(),
-                endpoint.getExpected_status(),
-                endpoint.is_active(),
+                endpoint.getIntervalSeconds(),
+                endpoint.getExpectedStatus(),
+                endpoint.isActive(),
                 endpoint.getCreatedAt()
         );
     }

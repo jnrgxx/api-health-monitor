@@ -31,10 +31,17 @@ public class GlobalExceptionHandler {
         );
     }
 
-    @ExceptionHandler(DuplicateEndpointException.class)
-    public ProblemDetail handleDuplicateEndpoint(DuplicateEndpointException ex) {
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ProblemDetail handleDuplicateResource(DuplicateResourceException ex) {
         return createProblemDetail(
                 HttpStatus.CONFLICT, ex.getMessage()
+        );
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ProblemDetail handleResourceNotFound(ResourceNotFoundException ex) {
+        return createProblemDetail(
+                HttpStatus.NOT_FOUND, ex.getMessage()
         );
     }
 

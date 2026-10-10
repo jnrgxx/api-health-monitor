@@ -1,0 +1,18 @@
+### Get all monitored endpoints
+GET http://localhost:8080/api/endpoints
+Accept: application/json
+
+
+### Create a monitored endpoint
+POST http://localhost:8080/api/endpoints
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "DummyJSON Comments",
+  "url": "https://dummyjson.com/comments",
+  "method": "GET",
+  "intervalSeconds": "1800",
+  "expectedStatus": 200,
+  "active": true
+}

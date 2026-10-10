@@ -12,4 +12,6 @@ public interface EndpointRepository extends JpaRepository<Endpoint, UUID> {
     boolean existsByUrl(String url); // Same pattern, returns true/false
 
     boolean existsById(UUID id);
+
+    boolean existsByUrlAndMethod(String url, String method);
 }

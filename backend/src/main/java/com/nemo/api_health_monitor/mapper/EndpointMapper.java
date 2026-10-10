@@ -22,6 +22,11 @@ public class EndpointMapper {
     public Endpoint toEntity(EndpointRequestDto request) {
         return Endpoint.builder()
                 .name(request.name())   // Extract the name from the request record
+                .url(request.url())
+                .method(request.method())
+                .intervalSeconds(request.intervalSeconds())
+                .expectedStatus(request.expectedStatus())
+                .active(request.active())
                 .build();               // Lombok @Builder generates this for us
     }
 

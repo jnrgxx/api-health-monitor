@@ -3,6 +3,7 @@ package com.nemo.api_health_monitor.service.impl;
 import com.nemo.api_health_monitor.domain.dto.EndpointRequestDto;
 import com.nemo.api_health_monitor.domain.dto.EndpointResponseDto;
 import com.nemo.api_health_monitor.domain.entity.Endpoint;
+import com.nemo.api_health_monitor.exception.DuplicateEndpointException;
 import com.nemo.api_health_monitor.exception.EndpointNotFoundException;
 import com.nemo.api_health_monitor.mapper.EndpointMapper;
 import com.nemo.api_health_monitor.repository.EndpointRepository;
@@ -24,9 +25,10 @@ public class EndpointServiceImpl implements EndpointService {
     private final ResultsRepository resultsRepository;
     private EndpointMapper endpointMapper;
 
-    public EndpointServiceImpl(EndpointRepository endpointRepository, ResultsRepository resultsRepository) {
+    public EndpointServiceImpl(EndpointRepository endpointRepository, ResultsRepository resultsRepository, EndpointMapper endpointMapper) {
         this.endpointRepository = endpointRepository;
         this.resultsRepository = resultsRepository;
+        this.endpointMapper = endpointMapper;
     }
 
     @Override
@@ -55,9 +57,10 @@ public class EndpointServiceImpl implements EndpointService {
     @Override
     public EndpointResponseDto addNewEndpoint(EndpointRequestDto request) {
         if (endpointRepository.existsByUrl(request.url())){
-            throw new IllegalArgumentException(
-                "Endpoint with url '" + request.url() + " ' already exists"
-            );
+            throw new DuplicateEndpointException(request.url());
+//            throw new IllegalArgumentException(
+//                "Endpoint with url '" + request.url() + " ' already exists"
+//            );
         }
         Endpoint endpoint = endpointMapper.toEntity(request);
         endpoint = endpointRepository.save(endpoint);

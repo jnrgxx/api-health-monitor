@@ -7,15 +7,35 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+
+    private static final Logger log =
+            LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
     /**
      * Catch-all for any unhandled RuntimeException (500 Internal Server Error).
      * This is a safety net — you should handle specific exceptions where possible.
      */
     @ExceptionHandler(RuntimeException.class)
     public ProblemDetail handleGenericError(RuntimeException ex) {
-        return createProblemDetail(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred");
+
+        log.error("Unhandled runtime exception", ex);
+
+        return createProblemDetail(
+                HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred"
+        );
+    }
+
+    @ExceptionHandler(DuplicateEndpointException.class)
+    public ProblemDetail handleDuplicateEndpoint(DuplicateEndpointException ex) {
+        return createProblemDetail(
+                HttpStatus.CONFLICT, ex.getMessage()
+        );
     }
 
     /**
@@ -25,8 +45,8 @@ public class GlobalExceptionHandler {
      *   "type": "about:blank",
      *   "title": "Not Found",
      *   "status": 404,
-     *   "detail": "Bucket not found with id: ...",
-     *   "instance": "/api/v1/buckets/..."
+     *   "detail": "Endpoint not found with id: ...",
+     *   "instance": "/api/v1/endpoints/..."
      *   "timestamp": "2026-06-10T23:53:00"
      * }
      */
